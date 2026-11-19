@@ -1,0 +1,1 @@
+TV EXTREME Termux deployment scripts. Run setup.sh once in Termux; it installs Android platform tools, pairs with the TV using Wireless debugging, then watches the public APK feed and installs new builds automatically. See the repository README for the exact command and prerequisites.
