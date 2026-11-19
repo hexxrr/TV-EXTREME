@@ -34,6 +34,7 @@ APK_URL="${RAW_APK}"
 EOF
 
 echo
+curl -fsSL "https://raw.githubusercontent.com/hexxrr/TV-EXTREME/main/termux/watch.sh" -o "$BASE/watch.sh"
 echo "Setup complete. Starting automatic deployment watcher..."
 echo "Keep Termux running. Press Ctrl+C to stop."
-bash "${HOME}/.tv-extreme/watch.sh"
+bash "$BASE/watch.sh"
