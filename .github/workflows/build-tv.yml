@@ -1,22 +1,38 @@
 name: Build TV EXTREME APK
+
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
-    paths: ['**.kt', '**.xml', '**.kts', '.github/workflows/build-tv.yml']
+    paths: ['**.kt', '**.xml', '**.kts', '.github/workflows/build-tv.yml', 'termux/**']
+
 permissions:
-  contents: read
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
-        with: { distribution: temurin, java-version: '17' }
+        with:
+          distribution: temurin
+          java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
-        with: { gradle-version: '8.11.1' }
-      - run: gradle :app:assembleDebug
-      - uses: actions/upload-artifact@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Build debug APK
+        run: gradle :app:assembleDebug
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
           name: TV-EXTREME-debug
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+      - name: Publish APK feed for Termux
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: apk
+          publish_dir: app/build/outputs/apk/debug
+          force_orphan: true
