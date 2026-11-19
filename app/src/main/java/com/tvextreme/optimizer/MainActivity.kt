@@ -26,10 +26,10 @@ class MainActivity : Activity() {
     private val bgTop = 0xFF101B35.toInt()
     private val bgBottom = 0xFF070B16.toInt()
     private val glass = 0xCC18243B.toInt()
-    private val glassSelected = 0xF02B4770.toInt()
-    private val accent = 0xFF72B7FF.toInt()
+    private val glassSelected = 0xFF42D9FF.toInt()
+    private val accent = 0xFF69E4FF.toInt()
     private val textMain = 0xFFF4F8FF.toInt()
-    private val textMuted = 0xFFB8C7DC.toInt()
+    private val textMuted = 0xFFB9C9DE.toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class MainActivity : Activity() {
         panel.addView(text("SMART TV  •  CONTROL CENTER", 13, accent, true))
         panel.addView(text("A cleaner, calmer way to manage your TV", 16, textMuted, false))
 
-        status = text("●  SYSTEM READY", 15, 0xFF83E5B0.toInt(), true)
+        status = text("●  SYSTEM READY  •  REMOTE READY", 15, 0xFF83E5B0.toInt(), true)
         status.setPadding(14, 14, 14, 20)
         panel.addView(status)
 
@@ -119,11 +119,11 @@ class MainActivity : Activity() {
         actions.forEachIndexed { i, card ->
             val chosen = i == selectedIndex
             card.background = cardBackground(chosen)
-            card.scaleX = if (chosen) 1.015f else 1f
-            card.scaleY = if (chosen) 1.015f else 1f
-            card.elevation = if (chosen) 12f else 2f
-            titles[i].setTextColor(if (chosen) Color.WHITE else textMain)
-            descriptions[i].setTextColor(if (chosen) 0xFFE2F0FF.toInt() else textMuted)
+            card.scaleX = if (chosen) 1.025f else 1f
+            card.scaleY = if (chosen) 1.025f else 1f
+            card.elevation = if (chosen) 18f else 2f
+            titles[i].setTextColor(if (chosen) 0xFF06172A.toInt() else textMain)
+            descriptions[i].setTextColor(if (chosen) 0xFF12314A.toInt() else textMuted)
             card.contentDescription = if (chosen) "Selected: ${titles[i].text}" else titles[i].text
         }
         actions[selectedIndex].requestFocus()
@@ -140,12 +140,12 @@ class MainActivity : Activity() {
 
     private fun cardBackground(focused: Boolean) = GradientDrawable(
         GradientDrawable.Orientation.TL_BR,
-        if (focused) intArrayOf(0xF0446696.toInt(), glassSelected)
-        else intArrayOf(0xAA24334D.toInt(), glass)
+        if (focused) intArrayOf(0xFFFFFFFF.toInt(), 0xFF73E8FF.toInt(), 0xFF36BCEB.toInt())
+        else intArrayOf(0xCC263A58.toInt(), glass)
     ).apply {
         shape = GradientDrawable.RECTANGLE
-        cornerRadius = 24f
-        setStroke(if (focused) 5 else 2, if (focused) accent else 0x667F9AB8)
+        cornerRadius = 26f
+        setStroke(if (focused) 7 else 2, if (focused) 0xFFFFFFFF.toInt() else 0x667F9AB8)
     }
 
     private fun action(title: String, desc: String, run: () -> Unit) {
@@ -153,7 +153,7 @@ class MainActivity : Activity() {
         val descView = text(desc, 13, textMuted, false)
         val box = LinearLayout(this).apply {
             orientation = 1
-            setPadding(20, 15, 20, 15)
+            setPadding(24, 18, 24, 18)
             background = cardBackground(false)
             isFocusable = true
             isFocusableInTouchMode = true
